@@ -22,9 +22,15 @@ proc playAwesomeSound =
       echo("Unable to load sound file")
 
   #channel = mixer.playChannel(-1, sound, 0); #wav
-  channel = mixer.playMusic(sound2, 1); #ogg/flac
+  channel = mixer.playMusic(sound2, 0); #ogg/flac
   if channel == -1:
       echo("Unable to play sound")
+      return
+
+  # otherwise, wait for it by fading out over a long time and freeing music
+  discard mixer.fadeOutMusic(3000)
+  mixer.freeMusic(sound2)
+
 
 
 # check array passed in
